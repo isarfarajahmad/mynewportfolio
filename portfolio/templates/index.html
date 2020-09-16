@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-47692315-56"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-47692315-56');
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    <link id="theme-style" rel="stylesheet" type="text/css" href="">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=Noto+Sans+HK&family=Permanent+Marker&display=swap"
+        rel="stylesheet">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+</head>
+<title>Md Sarfaraj Ahmad</title>
+
+<body>
+
+    <section class="s1">
+        <div class="main-container">
+            <div class="greeting-wrapper">
+                <h1>Hey, I'm Md Sarfaraj Ahmad</h1>
+            </div>
+
+
+
+            <div class="intro-wrapper">
+                <div class="nav-wrapper">
+
+                    <a href="{% url 'home' %}">
+                        <div class="dots-wrapper">
+                            <div id="dot-1" class="browser-dot"></div>
+                            <div id="dot-2" class="browser-dot"></div>
+                            <div id="dot-3" class="browser-dot"></div>
+                        </div>
+                    </a>
+
+
+                    <ul id="navigation">
+                        <li><a href="{% url 'home' %}#contact">Contact</a></li>
+                        {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'create_post' %}">Create Post</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="left-column">
+                    <img id="profile-pic" src="{% static 'images/dp.jpg' %}">
+                    <h5 style="text-align: center; line-height: 0;">Personalize Theme</h5>
+
+                    <div id="theme-options-wrapper">
+                        <div data-mode="light" id="light-mode" class="theme-dot"></div>
+                        <div data-mode="pink" id="pink-mode" class="theme-dot"></div>
+                        <div data-mode="green" id="green-mode" class="theme-dot"></div>
+                        <div data-mode="orange" id="orange-mode" class="theme-dot"></div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+
+                    <div id="preview-shadow">
+                        <div id="preview">
+                            <h3>What I Do</h3>
+                            <p>I am a Python Programmer and as a developer I prefer working in django.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="s2">
+        <div class="main-container">
+            <div class="about-wrapper">
+                <div class="about-me">
+                    <h4>About Me</h4>
+                    <p>I am a Python Programmer and I have been working with python since 2019.I also work as a web
+                        developer, I have been working with web development since 2018, the period during which I have
+                        worked in different Projects and different technologies. I am a self motivated and self-taught
+                        professional who likes to solve problems.
+                    </p>
+
+                    <h4>TOP EXPERTISE</h4>
+                    <p>Fullstack developer with primary focus on Django + React:
+                        <a target="_blank" href="{% static 'resume.pdf' %}">Download Resume</a></p>
+
+                    <div id="skills">
+                        <ul>
+                            <li>Python</li>
+                            <li>Django</li>
+                            <li>JavaScript</li>
+                            <li>React</li>
+                            <li>Postgres</li>
+                        </ul>
+
+                        <ul>
+                            <li>Java</li>
+                            <li>Flutter</li>
+                            <li>AWS (RDS/S3)</li>
+                            <li>Heroku</li>
+                            <li>HTML/CSS</li>
+                        </ul>
+
+                    </div>
+                </div>
+
+
+
+                <div class="social-links">
+                    <img id="social_img" src="{% static 'images/screen2.png' %}">
+                    <h5>Find Me on Social Media!</h5>
+                    <a target="_blank" href="https://instagram.com/isarfarajahmad">Instagram: @isarfarajahmad</a>
+                    <a target="_blank" href="https://twitter.com/isarfarajahmad">Twitter: @isarfarajahmad</a>
+                    <a target="_blank" href="https://linkedin.com/in/isarfarajahmad">LinkedIN: @isarfarajahmad</a>
+                    <a target="_blank" href="https://hackerrank.com/sarfarajahmad">HackerRank: @sarfarajahmad</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="s1">
+        <div class="main-container">
+            <h3 style="text-align: center;">Some of My Work</h3>
+
+            <div class="post-wrapper">
+                {% for post in posts %}
+                <div>
+                    <div class="post">
+                        <img class="thumbnail" src="{{post.thumbnail.url}}">
+                        <div class="post-preview">
+                            <h6 class="post-title">{{post.headline}}</h6>
+                            <p class="post-intro">{{post.sub_headline}}</p>
+                            <a href="{%  url 'post' post.slug %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <p align="center">
+                <a href="{% url 'posts' %}">View More</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="s2">
+        <div class="main-container">
+            <h3 style="text-align: center;">Send a Message</h3>
+            <form id="contact-form" method="POST" action="{% url 'send_email' %}">
+                {% csrf_token %}
+                <a name="contact"></a>
+                <label>Name</label>
+                <input required class="input-field" type="text" name="name">
+
+                <label>Subject</label>
+                <input required class="input-field" type="text" name="subject">
+
+                <label>Email</label>
+                <input required class="input-field" type="text" name="email">
+
+                <label>Message</label>
+                <textarea required class="input-field" name="message"></textarea>
+
+                <input id="submit-btn" type="submit" value="Send">
+
+            </form>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        let static = "{% static 'css' %}"
+    </script>
+
+    <script type="text/javascript" src="{% static 'script.js' %}"></script>
+</body>
+
+</html>
